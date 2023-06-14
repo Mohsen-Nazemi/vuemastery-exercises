@@ -7,7 +7,8 @@ app.component('product-display', {
     },
     template:
         /*html*/
-        `<div class="product-display">
+        `
+        <div class="product-display">
     <div class="product-container">
         <div class="product-image">
             <img v-bind:src="image" :class="{'out-of-stock-img': !inStock}">
@@ -29,7 +30,10 @@ app.component('product-display', {
             <button class="button" v-on:click="removeFromCart">remove Item</button>
         </div>
     </div>
-</div>`,
+    <review-list :reviews="reviews"></review-list>
+    <review-form @review-submitted="addReview"></review-form>
+</div>
+`,
     data() {
         return {
             product: 'socks',
@@ -40,7 +44,8 @@ app.component('product-display', {
                 { id: 2234, color: 'green', src: './assets/images/socks_green.jpg', quantity: 50 },
                 { id: 2235, color: 'blue', src: './assets/images/socks_blue.jpg', quantity: 0 }
             ],
-            onSale: true
+            onSale: true,
+            reviews: []
 
         }
 
@@ -54,6 +59,10 @@ app.component('product-display', {
         },
         updateVariant(index) {
             this.selectedVariant = index;
+        },
+        addReview(review){
+            this.reviews.push(review);
+
         }
 
     },
