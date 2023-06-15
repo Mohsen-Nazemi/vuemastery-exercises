@@ -30,7 +30,7 @@ app.component('product-display', {
             <button class="button" v-on:click="removeFromCart">remove Item</button>
         </div>
     </div>
-    <review-list :reviews="reviews"></review-list>
+    <review-list v-if="reviews.length" :reviews="reviews"></review-list>
     <review-form @review-submitted="addReview"></review-form>
 </div>
 `,
