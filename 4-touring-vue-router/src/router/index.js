@@ -27,7 +27,7 @@ const routes = [
       },
       {
         path: 'register',
-        name: 'event-rigister',
+        name: 'event-register',
         component: EventRegisterView
       },
       {
