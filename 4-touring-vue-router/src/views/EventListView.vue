@@ -40,8 +40,8 @@ export default {
         .then(response => {
           this.events = response.data
           this.totalEvents = response.headers['x-total-count']
-        }).catch(error => {
-          console.log(error)
+        }).catch(() => {
+          this.$router.push({ name: 'network-error' })          
         })
 
     })
