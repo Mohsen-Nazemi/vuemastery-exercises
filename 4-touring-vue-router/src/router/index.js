@@ -6,8 +6,10 @@ import EventEditView from '../views/event/EditView.vue'
 import EventLayoutView from '../views/event/LayoutView.vue'
 import NotFountView from '../views/NotFoundView.vue'
 import NetworkErrorView from '../views/NetworkErrorView.vue'
-
 import AboutView from '../views/AboutView.vue'
+import NProgress from 'nprogress'
+import EventService from '@/services/EventService'
+import GStore from '@/store'
 
 const routes = [
   {
@@ -21,7 +23,23 @@ const routes = [
     name: 'event-layout',
     props: true,
     component: EventLayoutView,
-    children: [ 
+    beforeEnter: to => {
+      return EventService.getEvent(to.params.id)
+        .then(response => {
+          GStore.event  = response.data
+        })
+        .catch(error => {
+          if (error.response && error.response.status == 404) {
+            return {
+              name: '404-resource',
+              params: { resource: 'event' }
+            }
+          } else {
+            return { name: 'network-error' }
+          }
+        })
+    },
+    children: [
       {
         path: '',
         name: 'event-details',
@@ -43,7 +61,7 @@ const routes = [
   {
     path: '/event/:afterEvent(.*)',
     redirect: to => {
-      return { path: '/events/' + to.params.afterEvent}
+      return { path: '/events/' + to.params.afterEvent }
     }
   },
   {
@@ -73,6 +91,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+
+router.beforeEach(() => {
+  NProgress.start()
+})
+
+
+router.afterEach(() => {
+  NProgress.done()
 })
 
 export default router
