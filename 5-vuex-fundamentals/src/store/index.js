@@ -14,7 +14,7 @@ export default createStore({
     SET_EVENTS(state, events) {
       state.events = events
     },
-    SET_EVENT(state, event){
+    SET_EVENT(state, event) {
       state.event = event
     }
   },
@@ -28,26 +28,31 @@ export default createStore({
 
         })
         .catch(error => {
-          console.log(error)
+          throw (error)
         })
     },
     fetchEvents({ commit }) {
-      EventService.getEvents()
+      return EventService.getEvents()
         .then(response => {
           commit('SET_EVENTS', response.data)
         })
         .catch(error => {
-          console.log(error)
+          throw (error)
         })
     },
-    fetchEvent({ commit }, id) {
-      EventService.getEvent(id)
-        .then(response => {
-          commit('SET_EVENT', response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    fetchEvent({ commit, state }, id) {
+      const existingEvent = state.events.find(event => event.id === id)
+      if (existingEvent) {
+        commit('SET_EVENT', existingEvent)
+      } else {
+        return EventService.getEvent(id)
+          .then(response => {
+            commit('SET_EVENT', response.data)
+          })
+          .catch(error => {
+            error(error)
+          })
+      }
     }
 
   },
