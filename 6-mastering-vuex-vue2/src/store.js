@@ -8,23 +8,53 @@ export default new Vuex.Store({
   state: {
     user: { id: 'abc123', name: 'Mohsen Nazemi' },
     categories: ['sustainability', 'nature', 'animal welfare', 'housing', 'education', 'food', 'community'],
-    events: [
-      { id: 1, title: '...', organizer: true },
-      { id: 2, title: '...', organizer: false },
-      { id: 3, title: '...', organizer: true },
-      { id: 4, title: '...', organizer: false }
-    ]
+    events: [],
+    eventsTotal: 0,
+    event: {}
   },
   mutations: {
     ADD_EVENT(state, event) {
       state.events.push(event)
+    },
+    SET_EVENTS(state, events) {
+      state.events = events
+    },
+    SET_EVENTS_TOTAL(state, eventsTotal) {
+      state.eventsTotal = eventsTotal
+    },
+    SET_EVENT(state, event) {
+      state.event = event
     }
   },
   actions: {
-    createEvent({commit}, event){
-      return  EventService.postEvent(event).then(()=>{
+    createEvent({ commit }, event) {
+      return EventService.postEvent(event).then(() => {
         commit('ADD_EVENT', event)
       })
+    },
+    fetchEvents({ commit }, { perPage, page }) {
+      EventService.getEvents(perPage, page)
+        .then(response => {
+          commit('SET_EVENTS', response.data)
+        })
+        .catch(error => {
+          console.log('There was an error:', error.response)
+        })
+    },
+    fetchEvent({ commit, getters }, id) {
+      var event =  getters.getEventById(id)
+
+      if(event){
+        commit('SET_EVENT', event)
+      } else{
+        EventService.getEvent(id)
+          .then(response => {
+            commit('SET_EVENT', response.data)
+          })
+          .catch(error => {
+            console.log('There was an error:', error.response)
+          })
+      }
     }
   },
   getters: {
