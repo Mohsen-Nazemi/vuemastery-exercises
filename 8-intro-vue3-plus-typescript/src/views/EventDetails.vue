@@ -8,15 +8,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-
+/* eslint-disable */
+import { EventItem } from '../types'
 import EventService from '@/services/EventService'
 export default defineComponent({
   props: ['id'],
   data() {
     return {
-      event: null
+      event: {} as EventItem
     }
   },
+  /* eslint-enable */
   created() {
     EventService.getEvent(this.id)
       .then(response => {
