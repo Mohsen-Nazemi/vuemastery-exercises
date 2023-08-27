@@ -7,7 +7,15 @@ import TodoApp from './components/ToDoApp.vue'
 </template>
 
 <style>
+* {
+  padding: 0;
+  margin: 0;
+}
+
 #app {
+  background-color: #597d9a;
+  display: flex;
+  justify-content: center;
   font-family: Avenir, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
