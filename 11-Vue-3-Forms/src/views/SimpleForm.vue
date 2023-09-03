@@ -5,15 +5,26 @@
 
       <BaseSelect :options="categories" v-model="event.category" label="Select a category" />
 
-      <h3>Name & describe your event</h3>
+      <fieldset>
 
-      <BaseInput v-model="event.title" label="Title" type="text" />
+        <legend>Name & describe your event</legend>
 
-      <BaseInput v-model="event.description" label="Description" type="text" />
+        <BaseInput
+          v-model="event.title"
+          label="Title"
+          type="text"
+          error="This input has an error!"
+         />
 
-      <h3>Where is your event?</h3>
+        <BaseInput v-model="event.description" label="Description" type="text" />
 
-      <BaseInput v-model="event.location" label="Location" type="text" />
+      </fieldset>
+
+      <fieldset>
+        <legend>Where is your event?</legend>
+
+        <BaseInput v-model="event.location" label="Location" type="text" />
+      </fieldset>
 
 
       <hr>
@@ -24,21 +35,28 @@
       </ul>
       <hr>
 
-      <h3>Are pets allowed?</h3>
-      <div>
-        <BaseRadioGroup v-model="event.pets" name="pets" :options="petOptions" />
+      <fieldset>
 
-      </div>
+        <legend>Pets</legend>
+        <p>Are pets allowed?</p>
+        <div>
+          <BaseRadioGroup v-model="event.pets" name="pets" :options="petOptions" />
 
+        </div>
 
-      <h3>Extras</h3>
-      <div>
-        <BaseCheckbox v-model="event.extras.catering" label="Catering" />
-      </div>
+      </fieldset>
 
-      <div>
-        <BaseCheckbox v-model="event.extras.music" label="Live music" />
-      </div>
+      <fieldset>
+        <legend>Extras</legend>
+        <div>
+          <BaseCheckbox v-model="event.extras.catering" label="Catering" />
+        </div>
+
+        <div>
+          <BaseCheckbox v-model="event.extras.music" label="Live music" />
+        </div>
+      </fieldset>
+
 
       <button class="button -fill-gradient" type="submit">Submit</button>
     </form>
@@ -83,12 +101,12 @@ export default {
         'https://my-json-server.typicode.com/Mohsen-Nazemi/vuemastery-exercises/events',
         this.event
       )
-      .then(function(response){
-        console.log('Response:', response)
-      })
-      .catch(function(error){
-        console.log('Error:', error)
-      })      
+        .then(function (response) {
+          console.log('Response:', response)
+        })
+        .catch(function (error) {
+          console.log('Error:', error)
+        })
     }
   }
 }

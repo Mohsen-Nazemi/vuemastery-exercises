@@ -1,15 +1,11 @@
 <template>
-    <input
-        type="radio"
-        :checked="modelValue === value"
-        :value="value"
-        @change="$emit('update:modelValue', value)"
-        v-bind="$attrs"
-    />
-    <label v-if="label">{{ label }}</label>
+    <input type="radio" :checked="modelValue === value" :value="value" @change="$emit('update:modelValue', value)"
+        v-bind="$attrs" :id="uuid" />
+    <label v-if="label" :for="uuid">{{ label }}</label>
 </template>
 
 <script>
+import UniqueID from '../features/UniqueID'
 export default {
     props: {
         label: {
@@ -20,10 +16,15 @@ export default {
             type: [String, Number],
             default: ''
         },
-        value:{
+        value: {
             type: [String, Number],
             required: true
         }
+    },
+    setup() {
+        const uuid = UniqueID().getID()
+
+        return {uuid}
     }
 
 }
