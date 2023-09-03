@@ -6,7 +6,7 @@
         @change="$emit('update:modelValue', value)"
         v-bind="$attrs"
     />
-    <label v-if="label">label</label>
+    <label v-if="label">{{ label }}</label>
 </template>
 
 <script>

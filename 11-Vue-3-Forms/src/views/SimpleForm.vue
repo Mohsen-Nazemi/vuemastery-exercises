@@ -1,36 +1,20 @@
 <template>
   <div>
     <h1>Create an event</h1>
-    <form>
+    <form @submit.prevent="sendForm">
 
-      <BaseSelect
-      :options="categories"
-      v-model="event.category"
-      label="Select a category"
-      />
+      <BaseSelect :options="categories" v-model="event.category" label="Select a category" />
 
       <h3>Name & describe your event</h3>
 
-      <BaseInput 
-      v-model="event.title"
-      label="Title"
-      type="text"
-      />
-      
-      <BaseInput
-      v-model="event.description"
-      label="Description"
-      type="text"
-      />
-      
+      <BaseInput v-model="event.title" label="Title" type="text" />
+
+      <BaseInput v-model="event.description" label="Description" type="text" />
+
       <h3>Where is your event?</h3>
 
-      <BaseInput
-      v-model="event.location"
-      label="Location"
-      type="text"
-      />
-      
+      <BaseInput v-model="event.location" label="Location" type="text" />
+
 
       <hr>
 
@@ -38,40 +22,22 @@
       <ul>
         <li v-for="(value, key) in event" :key="key"> {{ key }}: {{ value }}</li>
       </ul>
-     <hr>
+      <hr>
 
       <h3>Are pets allowed?</h3>
       <div>
-        <BaseRadio 
-        v-model="event.pets"
-        :value="1"
-        label="Yes"
-        name="pets"
-        />        
+        <BaseRadioGroup v-model="event.pets" name="pets" :options="petOptions" />
+
       </div>
 
-      <div>
-        <BaseRadio
-          v-model="event.pets"
-          :value="0"
-          label="No"
-          name="pets"
-        />        
-      </div>
 
       <h3>Extras</h3>
       <div>
-        <BaseCheckbox
-        v-model="event.extras.catering"
-        label="Catering"
-        />        
+        <BaseCheckbox v-model="event.extras.catering" label="Catering" />
       </div>
 
       <div>
-        <BaseCheckbox
-        v-model="event.extras.music"
-        label="Live music"
-        />
+        <BaseCheckbox v-model="event.extras.music" label="Live music" />
       </div>
 
       <button class="button -fill-gradient" type="submit">Submit</button>
@@ -81,7 +47,7 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       categories: [
         'sustainability',
@@ -102,7 +68,16 @@ export default {
           catering: false,
           music: false
         }
-      }
+      },
+      petOptions: [
+        { label: 'Yes', value: 1 },
+        { label: 'No', value: 0 }
+      ]
+    }
+  },
+  methods: {
+    sendForm() {
+      // we will handle form submission here
     }
   }
 }
