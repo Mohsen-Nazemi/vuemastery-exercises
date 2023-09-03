@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
@@ -77,7 +79,16 @@ export default {
   },
   methods: {
     sendForm() {
-      // we will handle form submission here
+      axios.post(
+        'https://my-json-server.typicode.com/Mohsen-Nazemi/vuemastery-exercises/events',
+        this.event
+      )
+      .then(function(response){
+        console.log('Response:', response)
+      })
+      .catch(function(error){
+        console.log('Error:', error)
+      })      
     }
   }
 }
