@@ -20,6 +20,12 @@ onMounted(() => {
 	})
 })
 
+function addCount(num: number) {
+  if (count.value !== null) {
+    count.value += num
+  }
+}
+
 </script>
 
 <template>
@@ -27,5 +33,6 @@ onMounted(() => {
     <h1>{{ appInfo.name }}</h1>
     <h2>{{ appInfo.slogan }}</h2>
   </div>
-  <p>{{ count }} </p>
+  <p> {{ count }} </p>
+  <button @click="addCount(1)">add</button>
 </template>
