@@ -25,6 +25,7 @@ function baz(s){
     return foo + ':' + s;
 }
 
+const msg = 'hello'
 ```
 
 And **bold**, _italics_.
